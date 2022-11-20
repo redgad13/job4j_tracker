@@ -43,4 +43,13 @@ class PointTest {
         double expected = 49.34;
         assertThat(out).isEqualTo(expected, Offset.offset(0.01));
     }
+
+    @Test
+    void whenx1is10y1is6z1is54x2is9y2is13z2is9then45dot55() {
+        Point point1 = new Point(10,6,54);
+        Point point2 = new Point(9,13,9);
+        double out = point1.distance3d(point2);
+        double expected = 45.55;
+        assertThat(out).isEqualTo(expected, Offset.offset(0.01));
+    }
 }
