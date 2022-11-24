@@ -1,11 +1,11 @@
 package ru.job4j.oop;
 
 public class Vehicle {
-    void move() {
+    public void move() {
         System.out.println("Move your body");
     }
 
-    void refuel() {
+    public void refuel() {
         System.out.println("Need some gasoline...");
     }
 }
