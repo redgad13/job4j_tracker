@@ -41,7 +41,7 @@ public class StartUITest {
         };
         Input input = new StubInput(answers);
         StartUI.deleteItem(input, tracker);
-        Item deleted = tracker.findById(0);
-        assertThat(deleted).isEqualTo(null);
+        Item deleted = tracker.findById(item.getId());
+        assertThat(deleted).isNull();
     }
 }
