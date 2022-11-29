@@ -116,7 +116,7 @@ public class StartUITest {
         Item one = tracker.add(new Item("test1"));
         String findByName = String.valueOf(one.getId());
         Input in = new StubInput(
-                new String[] {"0", one.getName(), findByName, "1"}
+                new String[] {"0", one.getName(), "1"}
         );
         UserAction[] actions = new UserAction[]{
                 new FindByNameAction(out),
