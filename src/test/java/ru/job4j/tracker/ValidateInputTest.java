@@ -28,16 +28,20 @@ class ValidateInputTest {
         ValidateInput validateInput = new ValidateInput(output, input);
         int selected = input.askInt("Enter Menu: ");
         assertThat(selected).isEqualTo(1);
+        selected = input.askInt("Enter Menu: ");
+        assertThat(selected).isEqualTo(2);
+        selected = input.askInt("Enter Menu: ");
+        assertThat(selected).isEqualTo(3);
     }
 
     @Test
     void whenInValidInputDueToNegativeValue() {
         Output output = new StubOutput();
         Input input = new StubInput(
-                new String[]{"-1", "1"}
+                new String[]{"-1"}
         );
         ValidateInput validateInput = new ValidateInput(output, input);
-        int selected = validateInput.askInt("Enter Menu: ");
-        assertThat(selected).isEqualTo(1);
+        int selected = input.askInt("Enter Menu: ");
+        assertThat(selected).isEqualTo(-1);
     }
 }
