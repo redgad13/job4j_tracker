@@ -41,8 +41,7 @@ public class PasswordValidator {
     public static boolean hasSpecial(String password) {
         boolean isSpecial = false;
         for (int i = 0; i < password.length(); i++) {
-            if (password.charAt(i) >= 33 && password.charAt(i) <= 47
-                    || password.charAt(i) >= 58 && password.charAt(i) <= 64) {
+            if (!Character.isLetterOrDigit(password.charAt(i))) {
                 isSpecial = true;
                 break;
             }
@@ -51,11 +50,15 @@ public class PasswordValidator {
     }
 
     public static boolean tooEasy(String password) {
-        return password.toLowerCase().contains("qwerty")
-                || password.toLowerCase().contains("12345")
-                || password.toLowerCase().contains("password")
-                || password.toLowerCase().contains("admin")
-                || password.toLowerCase().contains("user");
+        boolean isEasy = false;
+        String[] invalid = new String[]{"qwerty", "12345", "password", "admin", "user"};
+        for (String s : invalid) {
+            if (password.toLowerCase().contains(s)) {
+                isEasy = true;
+                break;
+            }
+        }
+        return isEasy;
     }
 
 }
