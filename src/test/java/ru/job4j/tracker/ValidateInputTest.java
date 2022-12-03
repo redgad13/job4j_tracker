@@ -18,7 +18,6 @@ class ValidateInputTest {
         assertThat(selected).isEqualTo(1);
     }
 
-
     @Test
     void whenMultipleValidInput() {
         Output output = new StubOutput();
