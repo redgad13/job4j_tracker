@@ -5,16 +5,17 @@ import java.util.List;
 
 public class Tracker {
     private final List<Item> items = new ArrayList<>();
-    private int ids = 1;
 
     public Item add(Item item) {
-        item.setId(ids++);
         items.add(item);
         return item;
     }
 
     public Item findById(int id) {
-        return items.get(id).getId() != -1 ? items.get(id) : null;
+        if (id < items.size()) {
+            return items.get(id).getId() != -1 ? items.get(id) : null;
+        }
+        return null;
     }
 
     public List<Item> findAll() {
@@ -31,13 +32,19 @@ public class Tracker {
         return temp;
     }
 
-     public boolean replace(int id, Item item) {
-        items.set(id, item);
-        return true;
+    public boolean replace(int id, Item item) {
+        if (id < items.size()) {
+            items.set(id, item);
+            return true;
+        }
+        return false;
     }
 
     public boolean delete(int id) {
-        items.remove(id);
-        return true;
+        if (id < items.size()) {
+            items.remove(id);
+            return true;
+        }
+        return false;
     }
 }
