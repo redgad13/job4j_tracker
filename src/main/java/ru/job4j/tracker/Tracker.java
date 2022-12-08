@@ -5,21 +5,32 @@ import java.util.List;
 
 public class Tracker {
     private final List<Item> items = new ArrayList<>();
+    private int ids = 1;
 
     public Item add(Item item) {
+        item.setId(ids++);
         items.add(item);
         return item;
     }
 
-    public Item findById(int id) {
-        if (id < items.size()) {
-            return items.get(id).getId() != -1 ? items.get(id) : null;
+    private int indexOf(int id) {
+        int result = -1;
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getId() == id) {
+                result = index;
+                break;
+            }
         }
-        return null;
+        return result;
+    }
+
+    public Item findById(int id) {
+        int index = indexOf(id);
+        return index != -1 ? items.get(index) : null;
     }
 
     public List<Item> findAll() {
-        return items;
+        return List.copyOf(items);
     }
 
     public List<Item> findByName(String key) {
@@ -33,18 +44,20 @@ public class Tracker {
     }
 
     public boolean replace(int id, Item item) {
-        if (id < items.size()) {
-            items.set(id, item);
-            return true;
+        int index = indexOf(id);
+        boolean rsl = index != -1;
+        if (rsl) {
+            items.set(index, item);
         }
-        return false;
+        return rsl;
     }
 
     public boolean delete(int id) {
-        if (id < items.size()) {
-            items.remove(id);
-            return true;
+        int index = indexOf(id);
+        boolean rsl = index != -1;
+        if (rsl) {
+            items.remove(index);
         }
-        return false;
+        return true;
     }
 }
