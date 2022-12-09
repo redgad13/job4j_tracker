@@ -15,10 +15,10 @@ public class PassportOfficeTest {
     @Test
     public void whenDuplicatePassportAdded() {
         Citizen citizen = new Citizen("2f44a", "Petr Arsentev");
-        Citizen citizen2 = new Citizen("2f44a", "Vadim Kuzin");
+        Citizen citizen1 = new Citizen("2f44a", "Vadim Kuzin");
         PassportOffice office = new PassportOffice();
         office.add(citizen);
-        office.add(citizen2);
-        assertThat(office.add(citizen2)).isFalse();
+        office.add(citizen1);
+        assertThat(office.add(citizen1)).isFalse();
     }
 }
