@@ -12,50 +12,42 @@ public class BankService {
     private final Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-        if (!users.containsKey(user)) {
-            users.put(user, new ArrayList<>());
-        }
+        users.putIfAbsent(user, new ArrayList<>());
     }
 
     public boolean deleteUser(String passport) {
-        boolean isDeleted = false;
-        for (User u : users.keySet()) {
-            if (passport.equals(u.getPassport())) {
-                users.remove(u);
-                isDeleted = true;
-                break;
-            }
-        }
-        return isDeleted;
+        return users.remove(new User(passport, "")) != null;
     }
 
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
-        if (!users.get(user).contains(account)) {
-            users.get(user).add(account);
-
+        if (user != null) {
+            if (!users.get(user).contains(account)) {
+                users.get(user).add(account);
+            }
         }
     }
 
     public User findByPassport(String passport) {
+        User user = null;
         for (User u : users.keySet()) {
             if (passport.equals(u.getPassport())) {
-                return u;
+                user = u;
+                break;
             }
         }
-        return null;
+        return user;
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        User user = findByPassport(passport);
-        List<Account> accounts = new ArrayList<>();
         Account desiredAccount = null;
+        User user = findByPassport(passport);
         if (user != null) {
-            accounts = users.get(user).stream().toList();
-        }
-        for (Account a : accounts) {
-            if (requisite.equals(a.getRequisite())) {
-                desiredAccount = a;
+            for (Account a : users.get(user)) {
+                if (requisite.equals(a.getRequisite())) {
+                    desiredAccount = a;
+                    break;
+                }
             }
         }
         return desiredAccount;
@@ -63,21 +55,15 @@ public class BankService {
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
-        boolean rsl = false;
-        Account initialAccount = findByRequisite(srcPassport, srcRequisite);
-        Account destinationAccount = findByRequisite(destPassport, destRequisite);
-        if (initialAccount == null || destinationAccount == null) {
+        Account source = findByRequisite(srcPassport, srcRequisite);
+        Account dest = findByRequisite(destPassport, destRequisite);
+        if (source == null || dest == null || source.getBalance() < amount) {
             return false;
-        }
-        if (initialAccount.getBalance() < amount) {
-            return rsl;
         } else {
-            double destAccountBalance = destinationAccount.getBalance() + amount;
-            destinationAccount.setBalance(destAccountBalance);
-            initialAccount.setBalance(initialAccount.getBalance() - amount);
-            rsl = true;
+            dest.setBalance(dest.getBalance() + amount);
+            source.setBalance(source.getBalance() - amount);
+            return true;
         }
-        return rsl;
     }
 
     public List<Account> getAccounts(User user) {
