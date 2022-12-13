@@ -60,11 +60,11 @@ public class BankService {
         Account dest = findByRequisite(destPassport, destRequisite);
         if (source == null || dest == null || source.getBalance() < amount) {
             return false;
-        } else {
-            dest.setBalance(dest.getBalance() + amount);
-            source.setBalance(source.getBalance() - amount);
-            return true;
         }
+        dest.setBalance(dest.getBalance() + amount);
+        source.setBalance(source.getBalance() - amount);
+        return true;
+
     }
 
     public List<Account> getAccounts(User user) {
