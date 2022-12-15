@@ -43,7 +43,24 @@ public class Item {
         return created;
     }
 
-        @Override
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Item item = (Item) obj;
+        return item.getName() == ((Item) obj).getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
         public String toString() {
             return "Item{"
                    + "id=" + id
