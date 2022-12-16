@@ -68,12 +68,8 @@ public class AnalyzeByMap {
         List<Label> result = new ArrayList<>();
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                int score = subjectsMap.getOrDefault(subject.name(), subject.score());
-                if (subjectsMap.containsKey(subject.name())) {
-                    subjectsMap.put(subject.name(), score + subject.score());
-                } else {
-                    subjectsMap.put(subject.name(), score);
-                }
+                int score = subjectsMap.getOrDefault(subject.name(), 0);
+                subjectsMap.put(subject.name(), score + subject.score());
             }
             for (Map.Entry<String, Integer> entrySet : subjectsMap.entrySet()) {
                 result.add(new Label(entrySet.getKey(), entrySet.getValue()));
