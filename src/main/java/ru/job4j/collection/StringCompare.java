@@ -5,22 +5,17 @@ import java.util.Comparator;
 public class StringCompare implements Comparator<String> {
     @Override
     public int compare(String o1, String o2) {
-        int result = -1;
-        char[] o1chars = o1.toCharArray();
-        char[] o2chars = o2.toCharArray();
-        int length = Math.min(o1chars.length, o2chars.length);
+        int result = 0;
+        int length = Math.min(o1.length(), o2.length());
         for (int i = 0; i < length;) {
-            result = Character.compare(o1chars[i], o2chars[i]);
-            if (result == 0) {
-                i++;
-            } else {
+            result = Character.compare(o1.charAt(i), o2.charAt(i));
+            if (result != 0) {
                 return result;
             }
+            i++;
         }
-        if (o1chars.length < o2chars.length) {
-            result = -1;
-        } else if (o1chars.length > o2chars.length) {
-            result = 1;
+        if (result == 0) {
+            result = Integer.compare(o1.length(), o2.length());
         }
         return result;
     }
