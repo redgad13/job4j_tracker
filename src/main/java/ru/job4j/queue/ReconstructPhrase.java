@@ -29,7 +29,7 @@ public class ReconstructPhrase {
     private String getDescendingElements() {
         StringBuilder stringBuilder = new StringBuilder();
         Iterator<Character> iterator = descendingElements.descendingIterator();
-        for (int i = 0; i < descendingElements.size(); i++) {
+        for (Character c : descendingElements) {
             stringBuilder.append(iterator.next());
         }
         return stringBuilder.toString();
