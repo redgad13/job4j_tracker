@@ -14,7 +14,6 @@ import java.util.Map;
  * Класс позволяет работать со счетами: добавлять счет пользователю по номеру паспорта пользователя,
  * искать счет по реквизитам счета, переводить деньги со счета на счет по номеру паспорта отправителя
  * и получателя и реквизитам счетов отправителя и получателя
- *
  */
 public class BankService {
     /**
@@ -25,6 +24,7 @@ public class BankService {
 
     /**
      * Функция добавления нового пользователя в HashMap с пустым списком счетов
+     *
      * @param user данные добавляемого пользователя @see ru.job4j.bank.User
      */
     public void addUser(User user) {
@@ -33,8 +33,8 @@ public class BankService {
 
     /**
      * Функция уделения пользователя по номеру паспорта
+     *
      * @param passport номер паспорта пользователя @see ru.job4j.bank.User
-     * @return
      */
     public boolean deleteUser(String passport) {
         return users.remove(new User(passport, "")) != null;
@@ -43,8 +43,9 @@ public class BankService {
     /**
      * Функция добавления счета пользователю по номеру его паспорта
      * Данные паспорта передаются в метод findByPassport()
+     *
      * @param passport номер паспорта пользователя @see ru.job4j.bank.User
-     * @param account данные о счете пользователя @see ru.job4j.bank.Account
+     * @param account  данные о счете пользователя @see ru.job4j.bank.Account
      */
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
@@ -58,48 +59,44 @@ public class BankService {
 
     /**
      * Метод ищет пользователя по номеру паспорта
+     *
      * @param passport номер паспорта пользователя
      * @return Объект класса User @see ru.job4j.bank.User
      */
     public User findByPassport(String passport) {
-        User user = null;
-        for (User u : users.keySet()) {
-            if (passport.equals(u.getPassport())) {
-                user = u;
-                break;
-            }
-        }
-        return user;
+        return users.keySet().stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
      * Метод ищет счет по номеру паспорта пользователя и реквизитам счета
-     * @param passport номер паспорта пользователя
+     *
+     * @param passport  номер паспорта пользователя
      * @param requisite реквизиты счета пользователя
      * @return возвращает объект типа Account @see ru.job4j.bank.Account
      */
     public Account findByRequisite(String passport, String requisite) {
-        Account desiredAccount = null;
         User user = findByPassport(passport);
         if (user != null) {
-            for (Account a : users.get(user)) {
-                if (requisite.equals(a.getRequisite())) {
-                    desiredAccount = a;
-                    break;
-                }
-            }
+            return users.get(user).stream()
+                    .filter(a -> a.getRequisite().equals(requisite))
+                    .findFirst()
+                    .orElse(null);
         }
-        return desiredAccount;
+        return null;
     }
 
     /**
      * Функция перевода средств со одного счета на другой
      * Возможен перевод между счетами разных пользователей
-     * @param srcPassport данные паспорта отправителя
-     * @param srcRequisite реквизиты счета отправителя
-     * @param destPassport данные паспорта получателя
+     *
+     * @param srcPassport   данные паспорта отправителя
+     * @param srcRequisite  реквизиты счета отправителя
+     * @param destPassport  данные паспорта получателя
      * @param destRequisite реквизиты счета получателя
-     * @param amount сумма перевода
+     * @param amount        сумма перевода
      * @return возвращает true/false
      */
     public boolean transferMoney(String srcPassport, String srcRequisite,
@@ -117,6 +114,7 @@ public class BankService {
 
     /**
      * возвращает список всех счетов пользователя типа ArrayList
+     *
      * @param user объект класа типа User @see ru.job4j.bank.User
      * @return возвращает список счетов пользователя в формате ArrayList
      */
