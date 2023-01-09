@@ -22,6 +22,5 @@ public class Broken {
     }
 
     void method(int a, int b, int c, int d) {
-
     }
 }
