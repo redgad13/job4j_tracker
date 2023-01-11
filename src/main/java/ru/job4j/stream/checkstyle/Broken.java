@@ -3,13 +3,13 @@ package ru.job4j.stream.checkstyle;
 public class Broken {
     public static final String NEWVALUE = "";
 
-    public String surname;
+    private String surname;
 
-    String name;
+    private String name;
 
     private int sizeOfEmpty = 10;
 
-    Broken() {
+    public Broken() {
     }
 
     void echo() {
