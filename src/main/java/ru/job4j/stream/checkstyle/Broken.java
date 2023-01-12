@@ -12,15 +12,15 @@ public class Broken {
     public Broken() {
     }
 
-    void echo() {
+    public void echo() {
     }
 
-    void media(Object obj) {
+    public void media(Object obj) {
         if (obj != null) {
             System.out.println(obj);
         }
     }
 
-    void method(int a, int b, int c, int d) {
+    public void method(int a, int b, int c, int d) {
     }
 }
