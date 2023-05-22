@@ -41,6 +41,7 @@ public class StartUI {
         try (Store tracker = new SqlTracker()) {
             List<UserAction> actions = List.of(
                     new CreateAction(output),
+                    new ShowAllItemsAction(output),
                     new EditItemAction(output),
                     new DeleteItemAction(output),
                     new FindByIdAction(output),
