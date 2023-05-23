@@ -3,6 +3,7 @@ package ru.job4j.tracker.store;
 import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Store;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,8 +23,7 @@ public class SqlTracker implements Store {
     }
 
     private void init() {
-        try (InputStream in = SqlTracker.class.getClassLoader()
-                .getResourceAsStream("app.properties")) {
+        try (InputStream in = new FileInputStream("db/liquibase.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
@@ -97,7 +97,9 @@ public class SqlTracker implements Store {
         try (PreparedStatement statement = cn.prepareStatement("SELECT * FROM items")) {
             try (ResultSet set = statement.executeQuery()) {
                 while (set.next()) {
-                    rsl.add(new Item(set.getInt("id"), set.getString("name")));
+                    rsl.add(new Item(set.getInt("id"),
+                            set.getString("name"),
+                            set.getTimestamp("created").toLocalDateTime()));
                 }
             }
         } catch (SQLException e) {
@@ -110,11 +112,13 @@ public class SqlTracker implements Store {
     public List<Item> findByName(String key) {
         List<Item> rsl = new ArrayList<>();
         try (PreparedStatement statement = cn.prepareStatement(
-                "SELECT name, created FROM items WHERE name = ?")) {
+                "SELECT * FROM items WHERE name = ?")) {
             statement.setString(1, key);
             try (ResultSet set = statement.executeQuery()) {
                 while (set.next()) {
-                    rsl.add(new Item(set.getInt("id"), set.getString("name")));
+                    rsl.add(new Item(set.getInt("id"),
+                            set.getString("name"),
+                            set.getTimestamp("created").toLocalDateTime()));
                 }
             }
         } catch (SQLException e) {
@@ -127,11 +131,13 @@ public class SqlTracker implements Store {
     public Item findById(int id) {
         Item rsl = null;
         try (PreparedStatement statement = cn.prepareStatement(
-                "SELECT name FROM items WHERE id = ?")) {
+                "SELECT * FROM items WHERE id = ?")) {
             statement.setInt(1, id);
             try (ResultSet set = statement.executeQuery()) {
                 while (set.next()) {
-                    rsl = new Item(set.getInt("id"), set.getString("name"));
+                    new Item(set.getInt("id"),
+                            set.getString("name"),
+                            set.getTimestamp("created").toLocalDateTime());
                 }
             }
 
