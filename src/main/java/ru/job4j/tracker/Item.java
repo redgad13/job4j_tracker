@@ -49,6 +49,10 @@ public class Item {
         return created;
     }
 
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -67,11 +71,11 @@ public class Item {
     }
 
     @Override
-        public String toString() {
-            return "Item{"
-                   + "id=" + id
-                   + ", name='" + name + '\''
-                   + ", created=" + created.format(FORMATTER)
-                   + '}';
-        }
+    public String toString() {
+        return "Item{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", created=" + created.format(FORMATTER)
+                + '}';
+    }
 }
