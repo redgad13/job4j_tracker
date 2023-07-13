@@ -16,6 +16,7 @@ public class Emulator {
             file = dir.concat("/").concat(file);
             DirFileCache dirFileCache = new DirFileCache(file);
             dirFileCache.put(file, e.getData(file));
+            System.out.println(e.getData(file));
             file = e.inputFileName();
         }
     }
@@ -44,6 +45,7 @@ public class Emulator {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             while (br.ready()) {
                 rsl.append(br.readLine());
+                rsl.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
