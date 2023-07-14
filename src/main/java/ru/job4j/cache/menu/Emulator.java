@@ -1,5 +1,6 @@
 package ru.job4j.cache.menu;
 
+import ru.job4j.cache.AbstractCache;
 import ru.job4j.cache.DirFileCache;
 
 import java.io.*;
@@ -14,7 +15,7 @@ public class Emulator {
         String file = e.inputFileName();
         while (!file.equals("exit")) {
             file = dir.concat("/").concat(file);
-            DirFileCache dirFileCache = new DirFileCache(file);
+            AbstractCache dirFileCache = new DirFileCache(file);
             dirFileCache.put(file, e.getData(file));
             System.out.println(e.getData(file));
             file = e.inputFileName();
