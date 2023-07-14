@@ -6,37 +6,28 @@ import ru.job4j.cache.DirFileCache;
 import java.io.*;
 import java.util.Scanner;
 
-public class Emulator extends DirFileCache {
-
-    public Emulator(String cachingDir) {
-        super(cachingDir);
-    }
-
+public class Emulator {
     public static void main(String[] args) {
+        Emulator e = new Emulator();
         System.out.println("Введите адрес каталога для кеширования");
-        String dir = inputDirectory();
+        String dir = e.inputDirectory();
         System.out.println("Введите имя файла для кеширования или Exit для выхода");
-        String file = inputFileName();
-        Emulator e = new Emulator(file);
+        String file = e.inputFileName();
         while (!file.equals("exit")) {
             file = dir.concat("/").concat(file);
             AbstractCache dirFileCache = new DirFileCache(file);
-            if ("".equals(dirFileCache.get(file))) {
-                dirFileCache.put(file, e.load(file));
-            }  else {
-                dirFileCache.get(file);
-            }
-            System.out.println(e.getData(file));
-            file = inputFileName();
+            dirFileCache.put(file, dirFileCache.get(file));
+            System.out.println(dirFileCache.get(file));
+            file = e.inputFileName();
         }
     }
 
-    public static String inputDirectory() {
+    public String inputDirectory() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
-    public static String inputFileName() {
+    public String inputFileName() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
