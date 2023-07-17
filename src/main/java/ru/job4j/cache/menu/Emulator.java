@@ -3,7 +3,6 @@ package ru.job4j.cache.menu;
 import ru.job4j.cache.AbstractCache;
 import ru.job4j.cache.DirFileCache;
 
-import java.io.*;
 import java.util.Scanner;
 
 public class Emulator {
@@ -11,12 +10,10 @@ public class Emulator {
         Emulator e = new Emulator();
         System.out.println("Введите адрес каталога для кеширования");
         String dir = e.inputDirectory();
+        AbstractCache dirFileCache = new DirFileCache(dir);
         System.out.println("Введите имя файла для кеширования или Exit для выхода");
         String file = e.inputFileName();
-        while (!file.equals("exit")) {
-            file = dir.concat("/").concat(file);
-            AbstractCache dirFileCache = new DirFileCache(file);
-            dirFileCache.put(file, dirFileCache.get(file));
+        while (!"exit".equals(file)) {
             System.out.println(dirFileCache.get(file));
             file = e.inputFileName();
         }
@@ -30,27 +27,5 @@ public class Emulator {
     public String inputFileName() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
-    }
-
-    public void putData() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(inputDirectory()))) {
-            Scanner sc = new Scanner(System.in);
-            bw.write(sc.nextLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getData(String path) {
-        StringBuilder rsl = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            while (br.ready()) {
-                rsl.append(br.readLine());
-                rsl.append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return rsl.toString();
     }
 }

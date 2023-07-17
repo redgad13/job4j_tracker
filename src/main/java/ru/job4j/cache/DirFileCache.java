@@ -14,8 +14,9 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     @Override
     protected String load(String key) {
+        System.out.println("внутри Load читаю файл " + key);
         StringBuilder builder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(cachingDir))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(cachingDir.concat("/").concat(key)))) {
             while (br.ready()) {
                 builder.append(br.readLine());
                 builder.append("\n");
