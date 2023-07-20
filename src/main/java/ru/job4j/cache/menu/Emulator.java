@@ -1,5 +1,6 @@
 package ru.job4j.cache.menu;
 
+import ru.job4j.Loader;
 import ru.job4j.cache.AbstractCache;
 import ru.job4j.cache.DirFileCache;
 
