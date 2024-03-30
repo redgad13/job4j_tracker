@@ -37,8 +37,8 @@ class FindByIdActionTest {
         String line = System.lineSeparator();
         int defaultId = 0;
         assertThat(output.toString()).isEqualTo(
-                "=== Find item by id ===" + line +
-                        "Заявка с введенным id: " + defaultId + " не найдена." + line
+                "=== Find item by id ===" + line
+                        + "Заявка с введенным id: " + defaultId + " не найдена." + line
         );
     }
 }
